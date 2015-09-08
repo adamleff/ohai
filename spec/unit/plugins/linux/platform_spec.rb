@@ -668,11 +668,11 @@ CISCO_RELEASE
 
     let(:have_os_release) { true }
 
-    it "should set platform to ios-xr and platform_family to wrlinux" do
+    it "should set platform to ios_xr and platform_family to wrlinux" do
       @plugin.lsb = nil
-      expect(File).to receive(:read).twice.with("/etc/os-release").and_return("ID=eXR\nID_LIKE=wrlinux\nNAME=IOS-XR\nVERSION=\"6.0.0.3I\"\nVERSION_ID=6.0.0.3I\nPRETTY_NAME=\"Cisco IOS XR Software, Version 6.0.0.03I\"\nHOME_URL=http://www.cisco.com\nBUILD_ID=TBD\nCISCO_RELEASE_INFO=/etc/os-release")
+      expect(File).to receive(:read).twice.with("/etc/os-release").and_return("ID=ios_xr\nID_LIKE=cisco-wrlinux\nNAME=IOS XR\nVERSION=\"6.0.0.3I\"\nVERSION_ID=6.0.0.3I\nPRETTY_NAME=\"Cisco IOS XR Software, Version 6.0.0.03I\"\nHOME_URL=http://www.cisco.com\nCISCO_RELEASE_INFO=/etc/os-release")
       @plugin.run
-      expect(@plugin[:platform]).to eq("ios-xr")
+      expect(@plugin[:platform]).to eq("ios_xr")
       expect(@plugin[:platform_family]).to eq("wrlinux")
       expect(@plugin[:platform_version]).to eq("6.0.0.3I")
     end
