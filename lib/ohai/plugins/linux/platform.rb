@@ -104,10 +104,9 @@ Ohai.plugin(:Platform) do
       platform get_redhatish_platform(contents)
       platform_version contents.match(/(\d\.\d\.\d)/)[0]
     elsif File.exist?("/etc/redhat-release")
-      if File.exist?('/etc/os-release') && (os_release_info = os_release_file_is_cisco? ) # check if Cisco
-        platform os_release_info['ID']
-        platform_family os_release_info['ID_LIKE']
-        platform_version os_release_info['VERSION'] || ""
+      if os_release_file_is_cisco? # Cisco guestshell
+        platform 'nexus_centos'
+        platform_version os_release_info['VERSION']
       else
         contents = File.read("/etc/redhat-release").chomp
         platform get_redhatish_platform(contents)
@@ -180,7 +179,7 @@ Ohai.plugin(:Platform) do
       platform_family "debian"
     when /fedora/, /pidora/
       platform_family "fedora"
-    when /oracle/, /centos/, /redhat/, /scientific/, /enterpriseenterprise/, /amazon/, /xenserver/, /cloudlinux/, /ibm_powerkvm/, /parallels/ # Note that 'enterpriseenterprise' is oracle's LSB "distributor ID"
+    when /oracle/, /centos/, /redhat/, /scientific/, /enterpriseenterprise/, /amazon/, /xenserver/, /cloudlinux/, /ibm_powerkvm/, /parallels/, /nexus_centos/ # Note that 'enterpriseenterprise' is oracle's LSB "distributor ID"
       platform_family "rhel"
     when /suse/
       platform_family "suse"
